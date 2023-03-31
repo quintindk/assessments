@@ -13,3 +13,7 @@ If you require an Azure DevOps environment to test your pipelines please create 
 ## DevOps
 
 The DevOps assessments that needs to be completed can be found [here](./devops/readme.md).
+
+## CSA
+
+The CSA assessments that needs to be completed can be found [here](./csa/readme.md).
