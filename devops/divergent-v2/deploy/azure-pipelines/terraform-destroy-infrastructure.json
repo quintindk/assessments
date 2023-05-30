@@ -1,0 +1,323 @@
+{
+ "options": [
+  {
+   "enabled": false,
+   "definition": {
+    "id": "5d58cc01-7c75-450c-be18-a388ddb129ec"
+   },
+   "inputs": {
+    "branchFilters": "[\"+refs\/heads\/*\"]",
+    "additionalFields": "{}"
+   }
+  },
+  {
+   "enabled": false,
+   "definition": {
+    "id": "a9db38f9-9fdc-478c-b0f9-464221e58316"
+   },
+   "inputs": {
+    "workItemType": "Issue",
+    "assignToRequestor": "true",
+    "additionalFields": "{}"
+   }
+  }
+ ],
+ "variables": {
+  "system.debug": {
+   "value": "false",
+   "allowOverride": true
+  }
+ },
+ "properties": {},
+ "tags": [],
+ "_links": {
+  "self": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/5?revision=22"
+  },
+  "web": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_build\/definition?definitionId=5"
+  },
+  "editor": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_build\/designer?id=5&_a=edit-build-definition"
+  },
+  "badge": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/status\/5"
+  }
+ },
+ "jobAuthorizationScope": 2,
+ "jobTimeoutInMinutes": 60,
+ "jobCancelTimeoutInMinutes": 5,
+ "process": {
+  "phases": [
+   {
+    "steps": [
+     {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "terraform init",
+      "timeoutInMinutes": 0,
+      "retryCountOnTaskFailure": 0,
+      "condition": "succeeded()",
+      "task": {
+       "id": "721c3f90-d938-11e8-9d92-09d7594721b5",
+       "versionSpec": "0.*",
+       "definitionType": "task"
+      },
+      "inputs": {
+       "command": "init",
+       "workingDirectory": "deploy\/terraform",
+       "environmentServiceName": "",
+       "providerAzureRmSubscriptionId": "",
+       "runAzLogin": "false",
+       "secureVarsFile": "",
+       "workspaceSubCommand": "select",
+       "stateSubCommand": "list",
+       "commandOptions": "",
+       "backendType": "azurerm",
+       "backendServiceArm": "71f33254-6053-434c-bb1f-9923c1681f4e",
+       "backendAzureRmSubscriptionId": "",
+       "ensureBackend": "false",
+       "backendAzureRmResourceGroupName": "rg-terraform",
+       "backendAzureRmResourceGroupLocation": "",
+       "backendAzureRmStorageAccountName": "tangentsaterraform",
+       "backendAzureRmStorageAccountSku": "Standard_RAGRS",
+       "backendAzureRmContainerName": "tangentcrterraform",
+       "backendAzureRmKey": "terraform.tfstate",
+       "aiInstrumentationKey": "88308046-7db8-45dd-bde7-0b4b5642a773",
+       "allowTelemetryCollection": "true",
+       "inputTargetPlanOrStateFilePath": "",
+       "resourceAddress": "",
+       "resourceId": "",
+       "lockID": "",
+       "publishPlanResults": "",
+       "workspaceName": "",
+       "skipExistingWorkspace": "false",
+       "stateMoveSource": "",
+       "stateMoveDestination": "",
+       "stateAddresses": "",
+       "backendServiceAws": "",
+       "backendAwsRegion": "",
+       "backendAwsBucket": "",
+       "backendAwsKey": "",
+       "providerServiceAws": "",
+       "providerAwsRegion": "",
+       "backendGcsCredentials": "",
+       "backendGcsBucket": "",
+       "backendGcsPrefix": "",
+       "providerGoogleCredentials": "",
+       "providerGoogleProject": "",
+       "providerGoogleRegion": ""
+      }
+     },
+     {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "terraform refresh",
+      "timeoutInMinutes": 0,
+      "retryCountOnTaskFailure": 0,
+      "condition": "succeeded()",
+      "task": {
+       "id": "721c3f90-d938-11e8-9d92-09d7594721b5",
+       "versionSpec": "0.*",
+       "definitionType": "task"
+      },
+      "inputs": {
+       "command": "refresh",
+       "workingDirectory": "deploy\/terraform",
+       "environmentServiceName": "71f33254-6053-434c-bb1f-9923c1681f4e",
+       "providerAzureRmSubscriptionId": "",
+       "runAzLogin": "false",
+       "secureVarsFile": "",
+       "workspaceSubCommand": "select",
+       "stateSubCommand": "list",
+       "commandOptions": "",
+       "backendType": "local",
+       "backendServiceArm": "",
+       "backendAzureRmSubscriptionId": "",
+       "ensureBackend": "false",
+       "backendAzureRmResourceGroupName": "",
+       "backendAzureRmResourceGroupLocation": "",
+       "backendAzureRmStorageAccountName": "",
+       "backendAzureRmStorageAccountSku": "Standard_RAGRS",
+       "backendAzureRmContainerName": "",
+       "backendAzureRmKey": "",
+       "aiInstrumentationKey": "88308046-7db8-45dd-bde7-0b4b5642a773",
+       "allowTelemetryCollection": "true",
+       "inputTargetPlanOrStateFilePath": "",
+       "resourceAddress": "",
+       "resourceId": "",
+       "lockID": "",
+       "publishPlanResults": "",
+       "workspaceName": "",
+       "skipExistingWorkspace": "false",
+       "stateMoveSource": "",
+       "stateMoveDestination": "",
+       "stateAddresses": "",
+       "backendServiceAws": "",
+       "backendAwsRegion": "",
+       "backendAwsBucket": "",
+       "backendAwsKey": "",
+       "providerServiceAws": "",
+       "providerAwsRegion": "",
+       "backendGcsCredentials": "",
+       "backendGcsBucket": "",
+       "backendGcsPrefix": "",
+       "providerGoogleCredentials": "",
+       "providerGoogleProject": "",
+       "providerGoogleRegion": ""
+      }
+     },
+     {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "terraform destroy",
+      "timeoutInMinutes": 0,
+      "retryCountOnTaskFailure": 2,
+      "condition": "succeeded()",
+      "task": {
+       "id": "721c3f90-d938-11e8-9d92-09d7594721b5",
+       "versionSpec": "0.*",
+       "definitionType": "task"
+      },
+      "inputs": {
+       "command": "destroy",
+       "workingDirectory": "deploy\/terraform",
+       "environmentServiceName": "71f33254-6053-434c-bb1f-9923c1681f4e",
+       "providerAzureRmSubscriptionId": "",
+       "runAzLogin": "false",
+       "secureVarsFile": "",
+       "workspaceSubCommand": "select",
+       "stateSubCommand": "list",
+       "commandOptions": "",
+       "backendType": "local",
+       "backendServiceArm": "",
+       "backendAzureRmSubscriptionId": "",
+       "ensureBackend": "false",
+       "backendAzureRmResourceGroupName": "",
+       "backendAzureRmResourceGroupLocation": "",
+       "backendAzureRmStorageAccountName": "",
+       "backendAzureRmStorageAccountSku": "Standard_RAGRS",
+       "backendAzureRmContainerName": "",
+       "backendAzureRmKey": "",
+       "aiInstrumentationKey": "88308046-7db8-45dd-bde7-0b4b5642a773",
+       "allowTelemetryCollection": "true",
+       "inputTargetPlanOrStateFilePath": "",
+       "resourceAddress": "",
+       "resourceId": "",
+       "lockID": "",
+       "publishPlanResults": "",
+       "workspaceName": "",
+       "skipExistingWorkspace": "false",
+       "stateMoveSource": "",
+       "stateMoveDestination": "",
+       "stateAddresses": "",
+       "backendServiceAws": "",
+       "backendAwsRegion": "",
+       "backendAwsBucket": "",
+       "backendAwsKey": "",
+       "providerServiceAws": "",
+       "providerAwsRegion": "",
+       "backendGcsCredentials": "",
+       "backendGcsBucket": "",
+       "backendGcsPrefix": "",
+       "providerGoogleCredentials": "",
+       "providerGoogleProject": "",
+       "providerGoogleRegion": ""
+      }
+     }
+    ],
+    "name": "terraform-cli-actions",
+    "refName": "Job_1",
+    "condition": "succeeded()",
+    "target": {
+     "executionOptions": {
+      "type": 0
+     },
+     "allowScriptsAuthAccessOption": false,
+     "type": 1
+    },
+    "jobAuthorizationScope": 2
+   }
+  ],
+  "target": {
+   "agentSpecification": {
+    "identifier": "ubuntu-latest"
+   }
+  },
+  "type": 1
+ },
+ "repository": {
+  "properties": {
+   "cleanOptions": "0",
+   "labelSources": "0",
+   "labelSourcesFormat": "$(build.buildNumber)",
+   "reportBuildStatus": "true",
+   "fetchDepth": "1",
+   "gitLfsSupport": "false",
+   "skipSyncSource": "false",
+   "checkoutNestedSubmodules": "false"
+  },
+  "id": "9e5d105a-5a22-494f-8adb-bc1f97d4d288",
+  "type": "TfsGit",
+  "name": "divergent-v2",
+  "url": "https:\/\/dev.azure.com\/frikdt\/divergent-v2\/_git\/divergent-v2",
+  "defaultBranch": "refs\/heads\/azure-pipelines",
+  "clean": "false",
+  "checkoutSubmodules": false
+ },
+ "processParameters": {},
+ "quality": 1,
+ "authoredBy": {
+  "displayName": "frikdt",
+  "url": "https:\/\/spsprodweu5.vssps.visualstudio.com\/A42ae6143-b13f-4395-afc9-c6ffb6c28ef2\/_apis\/Identities\/31df6970-34f3-6933-9018-f66de7b82258",
+  "_links": {
+   "avatar": {
+    "href": "https:\/\/dev.azure.com\/frikdt\/_apis\/GraphProfile\/MemberAvatars\/msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4"
+   }
+  },
+  "id": "31df6970-34f3-6933-9018-f66de7b82258",
+  "uniqueName": "frikdt@gmail.com",
+  "imageUrl": "https:\/\/dev.azure.com\/frikdt\/_apis\/GraphProfile\/MemberAvatars\/msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4",
+  "descriptor": "msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4"
+ },
+ "drafts": [],
+ "queue": {
+  "_links": {
+   "self": {
+    "href": "https:\/\/dev.azure.com\/frikdt\/_apis\/build\/Queues\/45"
+   }
+  },
+  "id": 45,
+  "name": "Azure Pipelines",
+  "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/build\/Queues\/45",
+  "pool": {
+   "id": 9,
+   "name": "Azure Pipelines",
+   "isHosted": true
+  }
+ },
+ "id": 5,
+ "name": "terraform-destroy-infrastructure",
+ "url": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/5?revision=22",
+ "uri": "vstfs:\/\/\/Build\/Definition\/5",
+ "path": "\\",
+ "type": 2,
+ "queueStatus": 0,
+ "revision": 22,
+ "createdDate": "2023-05-18T14:25:17.410Z",
+ "project": {
+  "id": "801ef7c1-f118-42d0-9390-9499cb6c01a8",
+  "name": "divergent-v2",
+  "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/projects\/801ef7c1-f118-42d0-9390-9499cb6c01a8",
+  "state": 1,
+  "revision": 49,
+  "visibility": 0,
+  "lastUpdateTime": "2023-05-16T12:53:49.313Z"
+ }
+}

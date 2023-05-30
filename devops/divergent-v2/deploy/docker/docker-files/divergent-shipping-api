@@ -1,0 +1,23 @@
+## fdt: Dockerfile for building and publishing an image for the Divergent.Shipping.API ##
+
+# fdt: Use the dotnet-sdk v.7.0 as base image for building the project
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ENV DOTNET_URLS=http://+:20296
+WORKDIR ./source
+
+# fdt: Copy the required source and build the project
+COPY ./source .
+WORKDIR /source/Divergent.Shipping.API
+RUN dotnet restore
+RUN dotnet publish -c release -o /app --no-restore
+
+# fdt: Run the Divergent.Shipping.API
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+RUN apt update
+RUN apt install -y aptitude
+RUN aptitude install -y "?name(^curl$)" "?name(^iproute2$)" "?name(^iputils-ping$)"
+WORKDIR /app
+RUN mkdir .db
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "Divergent.Shipping.API.dll"]
