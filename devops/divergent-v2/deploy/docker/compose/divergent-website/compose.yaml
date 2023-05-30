@@ -1,0 +1,52 @@
+services:
+  divergent-sales-api:
+    image: divergent-sales-api:v1.0.0-fdt
+    container_name: divergent-sales-api
+    hostname: divergent-sales-api
+#    ports:
+#       - target: 80
+#         published: 80
+#         protocol: tcp
+#         mode: host
+    expose:
+      - "80"
+    networks:
+      - divergent-net
+
+  divergent-shipping-api:
+    image: divergent-shipping-api:v1.0.0-fdt
+    container_name: divergent-shipping-api
+    hostname: divergent-shipping-api
+#    ports:
+#      - target: 80
+#        published: 80
+#        protocol: tcp
+#        mode: host
+    expose:
+      - "80"
+    networks:
+      - divergent-net
+
+  divergent-website:
+    image: divergent-website:v1.0.0-fdt
+    container_name: divergent-website
+    hostname: divergent-website
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    ports:
+      - target: 80
+        published: 11493
+        protocol: tcp
+        mode: host
+    networks:
+      - divergent-net
+    depends_on:
+      divergent-sales-api:
+        condition: service_started
+      divergent-shipping-api:
+        condition: service_started
+
+networks:
+  divergent-net:
+    external: true
+    name: divergent-net

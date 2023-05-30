@@ -1,0 +1,175 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/azure-pipelines
+  paths:
+    include:
+    - deploy/docker
+    - source/divergent-images
+    - deploy/helm
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/azure-pipelines
+jobs:
+- job: Job_1
+  displayName: build-and-push-image-divergent-sales-api
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: CmdLine@2
+    displayName: get-source
+    inputs:
+      script: >
+        mkdir -pv deploy/docker/source
+
+        cp -Ruv source/divergent-images/* deploy/docker/source/
+  - task: Docker@0
+    displayName: build-image-divergent-sales-api
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      dockerFile: '**/deploy/docker/docker-files/divergent-sales-api'
+      defaultContext: false
+      context: deploy/docker
+      imageName: divergent-sales-api:newest
+  - task: Docker@0
+    displayName: push-image-divergent-sales-api
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      action: Push an image
+      imageName: divergent-sales-api:newest
+  - task: CmdLine@2
+    displayName: remove-source
+    condition: always()
+    inputs:
+      script: >+
+        rm -rfv deploy/docker/source
+
+- job: Job_2
+  displayName: build-and-push-image-divergent-shipping-api
+  dependsOn: Job_1
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: CmdLine@2
+    displayName: get-source
+    inputs:
+      script: >
+        mkdir -pv deploy/docker/source
+
+        cp -Ruv source/divergent-images/* deploy/docker/source/
+  - task: Docker@0
+    displayName: build-image-divergent-shipping-api
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      dockerFile: '**/deploy/docker/docker-files/divergent-shipping-api'
+      defaultContext: false
+      context: deploy/docker
+      imageName: divergent-shipping-api:newest
+  - task: Docker@0
+    displayName: push-image-divergent-shipping-api
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      action: Push an image
+      imageName: divergent-shipping-api:newest
+  - task: CmdLine@2
+    displayName: remove-source
+    condition: always()
+    inputs:
+      script: >+
+        rm -rfv deploy/docker/source
+
+- job: Job_3
+  displayName: build-and-push-image-divergent-composition-gateway
+  dependsOn:
+  - Job_1
+  - Job_2
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: CmdLine@2
+    displayName: get-source
+    inputs:
+      script: >
+        mkdir -pv deploy/docker/source
+
+        cp -Ruv source/divergent-images/* deploy/docker/source/
+  - task: Docker@0
+    displayName: build-image-divergent-composition-gateway
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      dockerFile: '**/deploy/docker/docker-files/divergent-composition-gateway'
+      defaultContext: false
+      context: deploy/docker
+      imageName: divergent-composition-gateway:newest
+  - task: Docker@0
+    displayName: push-image-divergent-composition-gateway
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      action: Push an image
+      dockerFile: '**/deploy/docker/docker-files/divergent-composition-gateway'
+      defaultContext: false
+      context: deploy/docker
+      imageName: divergent-composition-gateway:newest
+  - task: CmdLine@2
+    displayName: remove-source
+    condition: always()
+    inputs:
+      script: >+
+        rm -rfv deploy/docker/source
+
+- job: Job_4
+  displayName: build-and-push-image-divergent-website
+  dependsOn:
+  - Job_1
+  - Job_2
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: CmdLine@2
+    displayName: get-source
+    inputs:
+      script: >
+        mkdir -pv deploy/docker/source
+
+        cp -Ruv source/divergent-images/* deploy/docker/source/
+  - task: Docker@0
+    displayName: build-image-divergent-website
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      dockerFile: '**/deploy/docker/docker-files/divergent-website'
+      defaultContext: false
+      context: deploy/docker
+      imageName: divergent-website:newest
+  - task: Docker@0
+    displayName: push-image-divergent-website
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureContainerRegistry: '{"loginServer":"divergentimages.azurecr.io", "id" : "/subscriptions/c44ff0ae-6fe2-4d3f-80c7-11b96f33ea5b/resourceGroups/rg-tangent-divergent/providers/Microsoft.ContainerRegistry/registries/DivergentImages"}'
+      action: Push an image
+      imageName: divergent-website:newest
+  - task: CmdLine@2
+    displayName: remove-source
+    condition: always()
+    inputs:
+      script: >+
+        rm -rfv deploy/docker/source
+
+...

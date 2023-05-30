@@ -1,0 +1,11 @@
+#!/bin/bash
+
+declare -A messages=( [error]="ERROR" [info]="INFO" [warn]="WARNING" [term]="TERMINAL ERROR" )
+declare -A process_vars=( [workdir]="" )
+
+print_log () {
+    printf "[%s] %s\n" "${1}" "${2}"
+}
+
+# Drop into the right context in case the script was called from a different directory
+process_vars[workdir]="$(dirname "${0}")"

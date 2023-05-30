@@ -1,0 +1,41 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/azure-pipelines
+  paths:
+    include:
+    - deploy/terraform/main.tf
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/azure-pipelines
+jobs:
+- job: Job_1
+  displayName: terraform-cli-actions
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: TerraformCLI@0
+    displayName: terraform init
+    inputs:
+      command: init
+      workingDirectory: deploy/terraform
+      backendType: azurerm
+      backendServiceArm: 71f33254-6053-434c-bb1f-9923c1681f4e
+      ensureBackend: true
+      backendAzureRmResourceGroupName: rg-terraform
+      backendAzureRmResourceGroupLocation: southafricanorth
+      backendAzureRmStorageAccountName: tangentsaterraform
+      backendAzureRmContainerName: tangentcrterraform
+      backendAzureRmKey: terraform.tfstate
+  - task: TerraformCLI@0
+    displayName: terraform apply
+    retryCountOnTaskFailure: 2
+    inputs:
+      command: apply
+      workingDirectory: deploy/terraform
+      environmentServiceName: 71f33254-6053-434c-bb1f-9923c1681f4e
+...

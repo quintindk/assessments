@@ -1,0 +1,36 @@
+resources:
+  pipelines:
+  - pipeline: divergent-v2-build-and-push-images
+    source: divergent-v2-build-and-push-images
+    trigger:
+      branches:
+        include:
+        - refs/heads/azure-pipelines
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/azure-pipelines
+name: $(date:yyyyMMdd)$(rev:.r)
+jobs:
+- job: Job_5
+  displayName: deploy-images
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: HelmDeploy@0
+    displayName: helm upgrade
+    inputs:
+      azureSubscriptionEndpoint: 71f33254-6053-434c-bb1f-9923c1681f4e
+      azureResourceGroup: rg-k8s
+      kubernetesCluster: aks-divergent
+      useClusterAdmin: true
+      namespace: divergent
+      command: upgrade
+      chartType: FilePath
+      chartPath: deploy/helm/divergent-website
+      releaseName: divergent-cluster
+      overrideValues: divergent-sales-api.image.tag=newest,divergent-shipping-api.image.tag=newest,divergent-composition-gateway.image.tag=newest,image.tag=newest
+      arguments: --install
+...

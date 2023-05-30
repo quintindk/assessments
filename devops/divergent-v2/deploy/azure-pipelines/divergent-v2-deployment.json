@@ -1,0 +1,244 @@
+{
+ "options": [
+  {
+   "enabled": true,
+   "definition": {
+    "id": "5d58cc01-7c75-450c-be18-a388ddb129ec"
+   },
+   "inputs": {
+    "branchFilters": "[\"+refs\/heads\/*\"]",
+    "additionalFields": "{}"
+   }
+  },
+  {
+   "enabled": false,
+   "definition": {
+    "id": "a9db38f9-9fdc-478c-b0f9-464221e58316"
+   },
+   "inputs": {
+    "workItemType": "Issue",
+    "assignToRequestor": "true",
+    "additionalFields": "{}"
+   }
+  }
+ ],
+ "triggers": [
+  {
+   "definition": {
+    "id": 6,
+    "url": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/6",
+    "path": "\\",
+    "queueStatus": 0,
+    "project": {
+     "id": "801ef7c1-f118-42d0-9390-9499cb6c01a8",
+     "name": "divergent-v2",
+     "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/projects\/801ef7c1-f118-42d0-9390-9499cb6c01a8",
+     "state": 1,
+     "revision": 49,
+     "visibility": 0,
+     "lastUpdateTime": "2023-05-16T12:53:49.313Z"
+    }
+   },
+   "requiresSuccessfulBuild": true,
+   "branchFilters": [
+    "+refs\/heads\/azure-pipelines"
+   ],
+   "triggerType": 128
+  }
+ ],
+ "variables": {
+  "system.debug": {
+   "value": "true",
+   "allowOverride": true
+  }
+ },
+ "properties": {},
+ "tags": [],
+ "_links": {
+  "self": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/9?revision=8"
+  },
+  "web": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_build\/definition?definitionId=9"
+  },
+  "editor": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_build\/designer?id=9&_a=edit-build-definition"
+  },
+  "badge": {
+   "href": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/status\/9"
+  }
+ },
+ "buildNumberFormat": "$(date:yyyyMMdd)$(rev:.r)",
+ "jobAuthorizationScope": 2,
+ "jobTimeoutInMinutes": 60,
+ "jobCancelTimeoutInMinutes": 5,
+ "process": {
+  "phases": [
+   {
+    "steps": [
+     {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "helm upgrade",
+      "timeoutInMinutes": 0,
+      "retryCountOnTaskFailure": 0,
+      "condition": "succeeded()",
+      "task": {
+       "id": "afa7d54d-537b-4dc8-b60a-e0eeea2c9a87",
+       "versionSpec": "0.*",
+       "definitionType": "task"
+      },
+      "inputs": {
+       "connectionType": "Azure Resource Manager",
+       "azureSubscriptionEndpoint": "71f33254-6053-434c-bb1f-9923c1681f4e",
+       "azureResourceGroup": "rg-k8s",
+       "kubernetesCluster": "aks-divergent",
+       "useClusterAdmin": "true",
+       "kubernetesServiceEndpoint": "",
+       "namespace": "divergent",
+       "azureSubscriptionEndpointForACR": "",
+       "azureResourceGroupForACR": "",
+       "azureContainerRegistry": "",
+       "command": "upgrade",
+       "chartType": "FilePath",
+       "chartName": "",
+       "chartPath": "deploy\/helm\/divergent-website",
+       "version": "",
+       "releaseName": "divergent-cluster",
+       "overrideValues": "divergent-sales-api.image.tag=newest,divergent-shipping-api.image.tag=newest,divergent-composition-gateway.image.tag=newest,image.tag=newest",
+       "valueFile": "",
+       "destination": "$(Build.ArtifactStagingDirectory)",
+       "canaryimage": "false",
+       "upgradetiller": "true",
+       "updatedependency": "false",
+       "save": "true",
+       "install": "true",
+       "recreate": "false",
+       "resetValues": "false",
+       "force": "false",
+       "waitForExecution": "true",
+       "arguments": "--install",
+       "enableTls": "false",
+       "caCert": "",
+       "certificate": "",
+       "privatekey": "",
+       "tillernamespace": "",
+       "failOnStderr": "false",
+       "publishPipelineMetadata": "true",
+       "chartNameForACR": "",
+       "chartPathForACR": ""
+      }
+     }
+    ],
+    "name": "deploy-images",
+    "refName": "Job_5",
+    "condition": "succeeded()",
+    "target": {
+     "executionOptions": {
+      "type": 0
+     },
+     "allowScriptsAuthAccessOption": false,
+     "type": 1
+    },
+    "jobAuthorizationScope": 2
+   }
+  ],
+  "target": {
+   "agentSpecification": {
+    "identifier": "ubuntu latest"
+   }
+  },
+  "type": 1
+ },
+ "repository": {
+  "properties": {
+   "cleanOptions": "0",
+   "labelSources": "0",
+   "labelSourcesFormat": "$(build.buildNumber)",
+   "reportBuildStatus": "true",
+   "fetchDepth": "1",
+   "gitLfsSupport": "false",
+   "skipSyncSource": "false",
+   "checkoutNestedSubmodules": "false"
+  },
+  "id": "9e5d105a-5a22-494f-8adb-bc1f97d4d288",
+  "type": "TfsGit",
+  "name": "divergent-v2",
+  "url": "https:\/\/dev.azure.com\/frikdt\/divergent-v2\/_git\/divergent-v2",
+  "defaultBranch": "refs\/heads\/azure-pipelines",
+  "clean": "false",
+  "checkoutSubmodules": false
+ },
+ "processParameters": {},
+ "quality": 1,
+ "authoredBy": {
+  "displayName": "frikdt",
+  "url": "https:\/\/spsprodweu5.vssps.visualstudio.com\/A42ae6143-b13f-4395-afc9-c6ffb6c28ef2\/_apis\/Identities\/31df6970-34f3-6933-9018-f66de7b82258",
+  "_links": {
+   "avatar": {
+    "href": "https:\/\/dev.azure.com\/frikdt\/_apis\/GraphProfile\/MemberAvatars\/msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4"
+   }
+  },
+  "id": "31df6970-34f3-6933-9018-f66de7b82258",
+  "uniqueName": "frikdt@gmail.com",
+  "imageUrl": "https:\/\/dev.azure.com\/frikdt\/_apis\/GraphProfile\/MemberAvatars\/msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4",
+  "descriptor": "msa.MzFkZjY5NzAtMzRmMy03OTMzLTkwMTgtZjY2ZGU3YjgyMjU4"
+ },
+ "drafts": [
+  {
+   "id": 10,
+   "name": "divergent-v2-deployment",
+   "url": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/10?revision=2",
+   "uri": "vstfs:\/\/\/Build\/Definition\/10",
+   "path": "\\",
+   "type": 2,
+   "queueStatus": 0,
+   "revision": 2,
+   "createdDate": "2023-05-25T09:28:33.443Z",
+   "project": {
+    "id": "801ef7c1-f118-42d0-9390-9499cb6c01a8",
+    "name": "divergent-v2",
+    "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/projects\/801ef7c1-f118-42d0-9390-9499cb6c01a8",
+    "state": 1,
+    "revision": 49,
+    "visibility": 0,
+    "lastUpdateTime": "2023-05-16T12:53:49.313Z"
+   }
+  }
+ ],
+ "queue": {
+  "_links": {
+   "self": {
+    "href": "https:\/\/dev.azure.com\/frikdt\/_apis\/build\/Queues\/45"
+   }
+  },
+  "id": 45,
+  "name": "Azure Pipelines",
+  "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/build\/Queues\/45",
+  "pool": {
+   "id": 9,
+   "name": "Azure Pipelines",
+   "isHosted": true
+  }
+ },
+ "id": 9,
+ "name": "divergent-v2-deployment",
+ "url": "https:\/\/dev.azure.com\/frikdt\/801ef7c1-f118-42d0-9390-9499cb6c01a8\/_apis\/build\/Definitions\/9?revision=8",
+ "uri": "vstfs:\/\/\/Build\/Definition\/9",
+ "path": "\\",
+ "type": 2,
+ "queueStatus": 0,
+ "revision": 8,
+ "createdDate": "2023-05-30T03:07:35.860Z",
+ "project": {
+  "id": "801ef7c1-f118-42d0-9390-9499cb6c01a8",
+  "name": "divergent-v2",
+  "url": "https:\/\/dev.azure.com\/frikdt\/_apis\/projects\/801ef7c1-f118-42d0-9390-9499cb6c01a8",
+  "state": 1,
+  "revision": 49,
+  "visibility": 0,
+  "lastUpdateTime": "2023-05-16T12:53:49.313Z"
+ }
+}
